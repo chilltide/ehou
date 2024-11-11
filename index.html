@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>恵方</title>
+  <style>
+    /* AT.ttfフォントを読み込む */
+    @font-face {
+      font-family: 'CustomAT';
+      src: url('AT.ttf') format('truetype');
+    }
+
+    /* 2.otfフォントを読み込む */
+    @font-face {
+      font-family: 'Custom2';
+      src: url('2.otf') format('opentype');
+    }
+
+    /* ページ全体のスタイル */
+    body, html {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column; /* ボタンをメッセージの下に配置 */
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      font-family: 'CustomAT', Arial, sans-serif;  /* フォントを指定 */
+      background-color: #f0f8ff;
+      position: relative;
+    }
+
+    /* テキスト表示用のスタイル */
+    #random-message {
+      font-size: 1.5em;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* 「もっと！」ボタンのスタイル */
+    #more-button {
+      padding: 10px 20px;
+      font-size: 1em;
+      color: #ffffff;
+      background-color: #ff69b4;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Custom2', sans-serif;  /* 「もっと！」ボタンに2.otfフォントを適用 */
+    }
+
+    /* ハートのアニメーションスタイル */
+    .heart {
+      position: absolute;
+      bottom: 0;
+      font-size: 24px;
+      color: #ff69b4;
+      opacity: 0.8;
+      font-family: Arial, sans-serif; /* 絵文字用のフォントを指定 */
+      animation: floatUp 5s linear infinite;
+    }
+
+    /* ハートが浮かび上がるアニメーション */
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(0.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="random-message"></div>
+<button id="more-button">もっと！</button>
+
+<script>
+  // 褒め言葉のリスト
+  const compliments = [
+    "かっこいい！マジでビジュいい。これはマジ。",
+    "眼鏡似合う。",
+    "趣味を他人に隠さないところが素敵。",
+    "ファッションセンスがいい。",
+    "持ってるものがおしゃれ",
+    "絵に魂がある。魂は練習だけじゃ獲得できない。マジの天性のやつ",
+    "創造力強い",
+    "クレープが似合う。定期的に竹下通りでクレープ食べてほしい かわいい(*'▽')",
+    "漫画、アニメの知識凄い。",
+    "まじだいすこ",
+    "好きなものがしっかりしている。",
+    "写真がうめえ。カレンダーつくって売れやください。",
+    "やさちい あったけえ心",
+    "家がおしゃれ",
+    "ライントークがおもろい。",
+    "なんかすげえ業界にかかわっててすげえ。",
+    "コミュ力がある。",
+    "まつげながい。かわちい",
+    "日々進化してる。テーマカラーセットしてたり、趣味全開だったり、意識してないかもだけど。特別な人間よ。"
+  ];
+
+  // ランダムメッセージを表示する関数
+  function displayRandomMessage() {
+    const randomIndex = Math.floor(Math.random() * compliments.length);
+    document.getElementById("random-message").textContent = compliments[randomIndex];
+  }
+
+  // 「もっと！」ボタンのクリックイベント
+  document.getElementById("more-button").addEventListener("click", displayRandomMessage);
+
+  // ページ読み込み時にランダムメッセージを表示
+  window.onload = displayRandomMessage;
+
+  // ハートを生成する関数
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.textContent = '❤️';
+
+    // ハートの位置をランダムに設定
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = Math.random() * 2 + 3 + 's';  // 3〜5秒のランダムな上昇速度
+
+    // bodyにハートを追加
+    document.body.appendChild(heart);
+
+    // アニメーション終了後にハートを削除
+    heart.addEventListener('animationend', () => {
+      heart.remove();
+    });
+  }
+
+  // 一定間隔でハートを生成する
+  setInterval(createHeart, 500); // 0.5秒ごとにハートを生成
+</script>
+
+</body>
+</html>
